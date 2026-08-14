@@ -456,6 +456,39 @@
     to   { transform: scale(0) translateY(-20px); opacity: 0; }
   }
 
+  /* ── MUSIC INDICATOR ─────────────────────────────── */
+  .music-indicator {
+    position: fixed; top: 20px; right: 20px;
+    z-index: 100;
+    display: none;
+    align-items: center; gap: 8px;
+    background: rgba(255,255,255,.07);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,180,220,.2);
+    border-radius: 100px;
+    padding: 8px 16px;
+    color: rgba(255,255,255,.7);
+    font-size: .8rem; font-weight: 600;
+    letter-spacing: .08em;
+  }
+  .music-indicator.show { display: flex; }
+  .music-bars {
+    display: flex; align-items: flex-end;
+    gap: 2px; height: 14px;
+  }
+  .music-bar {
+    width: 3px; border-radius: 3px;
+    background: var(--pink);
+    animation: bar-dance .8s ease-in-out infinite;
+  }
+  .music-bar:nth-child(2) { animation-delay: .15s; height: 60%; }
+  .music-bar:nth-child(3) { animation-delay: .3s;  height: 80%; }
+  .music-bar:nth-child(4) { animation-delay: .1s;  height: 50%; }
+  @keyframes bar-dance {
+    0%,100% { transform: scaleY(1); }
+    50%      { transform: scaleY(.3); }
+  }
+
   /* ── RESPONSIVE ──────────────────────────────────── */
   @media (max-width: 500px) {
     .glass-card { padding: 36px 28px; }
@@ -474,6 +507,17 @@
 
 <!-- Confetti Canvas -->
 <canvas id="confetti-canvas"></canvas>
+
+<!-- Music Indicator -->
+<div class="music-indicator" id="music-indicator">
+  <div class="music-bars">
+    <div class="music-bar" style="height:40%"></div>
+    <div class="music-bar" style="height:60%"></div>
+    <div class="music-bar" style="height:80%"></div>
+    <div class="music-bar" style="height:50%"></div>
+  </div>
+  Now Playing
+</div>
 
 <!-- ── SCREEN 1: ARE YOU READY ───────────────────── -->
 <div class="screen gradient-bg active" id="screen-ready">
@@ -571,10 +615,10 @@
   <!--
     CHANGE THE SRC BELOW to your desired music URL.
     Examples:
-      <source src="https://youtu.be/6x5vSLKfbXo?list=RD6x5vSLKfbXo" type="audio/mpeg">
+      <source src="https://your-music-url.com/song.mp3" type="audio/mpeg">
       <source src="birthday.mp3" type="audio/mpeg">
   -->
-  <source src="https://youtu.be/6x5vSLKfbXo?list=RD6x5vSLKfbXo" type="audio/mpeg">
+  <source src="last.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -827,6 +871,7 @@ const audio = document.getElementById('bg-music');
 
 function startWithMusic(){
   audio.play().catch(()=>{});
+  document.getElementById('music-indicator').classList.add('show');
   switchScreen('screen-music','screen-countdown', startCountdown);
 }
 
