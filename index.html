@@ -4,11 +4,33 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Happy Birthday Leann Coton</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Quicksand:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet"/>
+
+<!-- ══════════════════════════════════════════════════════════════
+     FONTS — dito lang kailangan galawin para magbago ang fonts.
+
+     1) Itong <link> ang naglo-load ng font families galing Google Fonts.
+        Kung gusto mo ng IBANG font, pumunta sa https://fonts.google.com,
+        pumili, i-click, kopyahin ang <link> tag na bibigay — palitan
+        ang href sa baba (o dagdag ka na lang ng bagong <link> line).
+
+     2) Tapos pumunta sa ":root { ... }" block sa baba, palitan ang
+        --font-heading / --font-body / --font-script para tugma sa
+        font name na pinili mo. Yun na — automatic na susunod dun
+        lahat ng element sa page.
+     ══════════════════════════════════════════════════════════════ -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Quicksand:wght@300;400;500;600;700&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600;1,700&display=swap" rel="stylesheet"/>
+
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
+    /* ── FONTS (edit these 3 lines to change fonts everywhere) ── */
+    --font-heading: 'Playfair Display', serif;   /* big titles / names / numbers   */
+    --font-body:    'Quicksand', sans-serif;      /* buttons / labels / paragraphs  */
+    --font-script:  'Great Vibes', cursive;       /* handwritten / cursive accents  */
+    --font-accent:  'Cormorant Garamond', serif;  /* elegant italic — "ready"/countdown text */
+
+    /* ── COLORS ── */
     --pink:       #FF6EB4;
     --pink-light: #FFB3DA;
     --pink-deep:  #E91E8C;
@@ -23,7 +45,7 @@
   html, body {
     width: 100%; height: 100%;
     overflow: hidden;
-    font-family: 'Quicksand', sans-serif;
+    font-family: var(--font-body);
     background: #1a0028;
   }
 
@@ -39,10 +61,11 @@
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     opacity: 0; pointer-events: none;
-    transition: opacity 0.8s ease;
+    transform: scale(1.035);
+    transition: opacity 0.8s ease, transform 0.9s cubic-bezier(.22,.9,.3,1);
   }
-  .screen.active { opacity: 1; pointer-events: all; }
-  .screen.fade-out { opacity: 0; pointer-events: none; }
+  .screen.active { opacity: 1; pointer-events: all; transform: scale(1); }
+  .screen.fade-out { opacity: 0; pointer-events: none; transform: scale(0.97); }
 
   /* ── GLOBAL BACKGROUND GRADIENT ────────────────── */
   .gradient-bg {
@@ -83,25 +106,33 @@
 
   /* ── SCREEN 1 — ARE YOU READY ───────────────────── */
   #screen-ready .subtitle {
-    font-family: 'Great Vibes', cursive;
+    font-family: var(--font-script);
     font-size: clamp(1.4rem, 4vw, 2rem);
     color: var(--pink-light);
     margin-bottom: 8px;
     animation: float 3s ease-in-out infinite;
   }
   #screen-ready h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.2rem, 6vw, 3.5rem);
-    font-weight: 900;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-size: clamp(2.4rem, 7vw, 4rem);
+    font-weight: 600;
     color: var(--white);
-    line-height: 1.1;
-    margin-bottom: 16px;
+    line-height: 1.15;
+    margin-bottom: 6px;
+    letter-spacing: .01em;
   }
   #screen-ready h1 span {
+    font-weight: 700;
     background: linear-gradient(135deg, var(--pink), var(--purple-light));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+  #screen-ready .h1-flourish {
+    width: 90px; height: 10px;
+    margin: 10px auto 22px;
+    opacity: .7;
   }
   #screen-ready p {
     color: rgba(255,255,255,.6);
@@ -117,7 +148,7 @@
     padding: 16px 52px;
     border: none; cursor: pointer;
     border-radius: 100px;
-    font-family: 'Quicksand', sans-serif;
+    font-family: var(--font-body);
     font-weight: 700; font-size: 1.05rem;
     letter-spacing: .06em;
     color: #fff;
@@ -143,7 +174,8 @@
   .btn-no:hover { background: rgba(255,255,255,.06); box-shadow: none; }
   .btn-ghost {
     background: transparent; border: none; color: rgba(255,255,255,.5);
-    font-family: 'Quicksand', sans-serif; font-weight: 600; font-size: .85rem;
+    font-family: var(--font-body);
+    font-weight: 600; font-size: .85rem;
     letter-spacing: .06em; cursor: pointer; padding: 10px 16px;
     text-decoration: underline; text-underline-offset: 4px;
     transition: color .2s;
@@ -183,7 +215,7 @@
     50%      { box-shadow: 0 0 70px rgba(233,30,140,.8), 0 0 100px rgba(155,89,182,.4); }
   }
   #screen-music h2 {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-heading);
     font-size: clamp(1.6rem, 4vw, 2.4rem);
     font-weight: 700; color: var(--white);
     margin-bottom: 10px;
@@ -198,7 +230,7 @@
     flex-direction: column;
   }
   .countdown-num {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-heading);
     font-size: clamp(8rem, 30vw, 18rem);
     font-weight: 900;
     line-height: 1;
@@ -217,18 +249,19 @@
     100% { transform: scale(1); opacity: 1; }
   }
   .countdown-label {
-    font-family: 'Quicksand', sans-serif;
-    font-size: clamp(.9rem, 2.5vw, 1.2rem);
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-size: clamp(1.3rem, 4vw, 1.9rem);
     font-weight: 600;
-    letter-spacing: .25em;
-    color: rgba(255,255,255,.45);
-    text-transform: uppercase;
-    margin-top: 12px;
+    letter-spacing: .03em;
+    color: var(--pink-light);
+    text-shadow: 0 0 24px rgba(255,110,180,.5);
+    margin-top: 18px;
   }
 
   /* ── SCREEN 5 — MESSAGE SLIDES ─────────────────── */
   #screen-slides .slide-eyebrow {
-    font-family: 'Quicksand', sans-serif;
+    font-family: var(--font-body);
     font-size: .78rem; font-weight: 700;
     letter-spacing: .28em; text-transform: uppercase;
     color: var(--pink-light); opacity: .75;
@@ -257,7 +290,7 @@
     display: block;
   }
   .slide-title {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-heading);
     font-size: clamp(1.5rem, 4.5vw, 2.1rem);
     font-weight: 700;
     color: var(--white);
@@ -291,15 +324,176 @@
   }
   .slide-content { animation: rise-up .55s ease both; }
 
+  /* ── SCREEN 5B — PHOTO GALLERY / SLIDESHOW ─────── */
+  #screen-gallery { padding: 0; }
+  .gallery-wrap { position: relative; width: 100%; height: 100%; overflow: hidden; }
+
+  /* story-style progress bar — segments = number of photos, encodes position + autoplay timing */
+  .gallery-progress {
+    position: absolute; top: 18px; left: 18px; right: 18px;
+    display: flex; gap: 6px; z-index: 30;
+  }
+  .gallery-progress .seg {
+    flex: 1; height: 3px; border-radius: 3px;
+    background: rgba(255,255,255,.25); overflow: hidden;
+  }
+  .gallery-progress .seg .fill {
+    display: block; height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--pink), var(--purple-light));
+    border-radius: 3px;
+  }
+
+  .gallery-eyebrow-top {
+    position: absolute; top: 36px; left: 0; right: 0;
+    text-align: center; z-index: 30;
+    font-family: var(--font-body);
+    font-size: .72rem; font-weight: 700;
+    letter-spacing: .22em; text-transform: uppercase;
+    color: rgba(255,255,255,.55);
+  }
+
+  .gallery-stage { position: absolute; inset: 0; }
+  .gallery-slide {
+    position: absolute; inset: 0;
+    opacity: 0; transition: opacity .9s ease;
+    pointer-events: none;
+  }
+  .gallery-slide.active { opacity: 1; pointer-events: auto; }
+  .gallery-slide img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block; transform: scale(1);
+  }
+  .gallery-slide .photo-placeholder {
+    width: 100%; height: 100%; border-radius: 0;
+    background: linear-gradient(135deg, var(--purple-deep), var(--pink-deep));
+  }
+  .gallery-slide.active img { animation: kenburns-a 6s ease-out forwards; }
+  .gallery-slide.kb-alt.active img { animation-name: kenburns-b; }
+  @keyframes kenburns-a { from { transform: scale(1) translate(0,0); } to { transform: scale(1.16) translate(-2.5%,-2%); } }
+  @keyframes kenburns-b { from { transform: scale(1.16) translate(2.5%,0); } to { transform: scale(1) translate(0,-1.5%); } }
+
+  .gallery-stage::after {
+    content: ''; position: absolute; inset: 0; z-index: 5; pointer-events: none;
+    background: linear-gradient(to top, rgba(10,0,20,.92) 0%, rgba(15,0,25,.35) 32%, transparent 58%),
+                linear-gradient(to bottom, rgba(10,0,20,.55) 0%, transparent 22%);
+  }
+
+  .gallery-nav-zone { position: absolute; top: 0; bottom: 0; width: 38%; z-index: 20; cursor: pointer; }
+  .gallery-nav-zone.left  { left: 0; }
+  .gallery-nav-zone.right { right: 0; }
+  .gallery-nav-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 40px; height: 40px; border-radius: 50%; z-index: 22;
+    background: rgba(255,255,255,.08); backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,.2);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; opacity: 0; transition: opacity .2s;
+    pointer-events: none;
+  }
+  .gallery-nav-zone.left .gallery-nav-arrow  { left: 14px; }
+  .gallery-nav-zone.right .gallery-nav-arrow { right: 14px; }
+  .gallery-nav-zone:hover .gallery-nav-arrow { opacity: .9; }
+
+  .gallery-caption {
+    position: absolute; left: 26px; right: 26px; bottom: 118px;
+    z-index: 25; text-align: center;
+  }
+  .gallery-caption .cap-eyebrow {
+    font-family: var(--font-body); font-size: .72rem; font-weight: 700;
+    letter-spacing: .24em; text-transform: uppercase;
+    color: var(--pink-light); opacity: .85; margin-bottom: 10px;
+  }
+  .gallery-caption .cap-text {
+    font-family: var(--font-heading); font-weight: 700;
+    font-size: clamp(1.15rem, 4.4vw, 1.7rem); color: #fff;
+    text-shadow: 0 4px 24px rgba(0,0,0,.65); line-height: 1.3;
+  }
+
+  .gallery-continue {
+    position: absolute; left: 50%; bottom: 36px; transform: translateX(-50%);
+    z-index: 30; display: none;
+  }
+  .gallery-hint {
+    position: absolute; left: 0; right: 0; bottom: 14px; z-index: 25;
+    text-align: center; font-size: .72rem; letter-spacing: .1em;
+    color: rgba(255,255,255,.35);
+  }
+
+  /* ── SCREEN 5C — OUR STORY (TIMELINE) ──────────── */
+  #screen-timeline {
+    overflow-y: auto;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 70px 20px 40px;
+  }
+  .timeline-wrap { max-width: 560px; width: 100%; }
+  .timeline-eyebrow {
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: .78rem; font-weight: 700;
+    letter-spacing: .28em; text-transform: uppercase;
+    color: var(--pink-light); opacity: .75;
+    margin-bottom: 10px;
+  }
+  .timeline-heading {
+    text-align: center;
+    font-family: var(--font-accent);
+    font-style: italic; font-weight: 600;
+    font-size: clamp(1.9rem, 6vw, 2.8rem);
+    color: var(--white);
+    margin-bottom: 48px;
+  }
+  .timeline-list { position: relative; padding-left: 34px; }
+  .timeline-list::before {
+    content: '';
+    position: absolute; left: 7px; top: 6px; bottom: 6px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--pink-deep), var(--purple), rgba(155,89,182,.1));
+    border-radius: 2px;
+  }
+  .timeline-item {
+    position: relative;
+    padding-bottom: 42px;
+    opacity: 0; transform: translateX(-16px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-item.in-view { opacity: 1; transform: translateX(0); }
+  .timeline-dot {
+    position: absolute; left: -34px; top: 3px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--pink-light), var(--pink-deep));
+    box-shadow: 0 0 0 4px rgba(233,30,140,.15), 0 0 16px rgba(255,110,180,.6);
+  }
+  .timeline-date {
+    font-family: var(--font-body);
+    font-size: .72rem; font-weight: 700;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--pink-light); opacity: .8;
+    margin-bottom: 6px;
+  }
+  .timeline-item-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: clamp(1.15rem, 3.6vw, 1.4rem);
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .timeline-item-text {
+    color: rgba(255,255,255,.72);
+    font-size: .96rem; line-height: 1.75;
+  }
+  .timeline-continue { display: block; margin: 10px auto 0; }
+
   /* ── SCREEN 6 — CONFIRM ────────────────────────── */
   #screen-confirm .confirm-icon {
-    font-family: 'Great Vibes', cursive;
+    font-family: var(--font-script);
     font-size: 2.8rem;
     color: var(--pink-light);
     margin-bottom: 14px;
   }
   #screen-confirm h2 {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-heading);
     font-size: clamp(1.5rem, 4.2vw, 2.1rem);
     font-weight: 700; color: var(--white);
     margin-bottom: 12px; line-height: 1.3;
@@ -326,7 +520,7 @@
 
   /* --- Script Title --- */
   .hb-script {
-    font-family: 'Great Vibes', cursive;
+    font-family: var(--font-script);
     font-size: clamp(2.8rem, 8vw, 5rem);
     color: var(--pink-light);
     text-shadow: 0 0 40px rgba(255,110,180,.7);
@@ -336,7 +530,7 @@
 
   /* --- Name Title --- */
   .hb-name {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-heading);
     font-size: clamp(2rem, 7vw, 4rem);
     font-weight: 900;
     text-align: center;
@@ -405,7 +599,7 @@
 
   /* --- Bottom ribbon --- */
   .ribbon {
-    font-family: 'Great Vibes', cursive;
+    font-family: var(--font-script);
     font-size: 1.4rem;
     color: rgba(255,180,220,.5);
     text-align: center;
@@ -468,6 +662,7 @@
     border-radius: 100px;
     padding: 8px 16px;
     color: rgba(255,255,255,.7);
+    font-family: var(--font-body);
     font-size: .8rem; font-weight: 600;
     letter-spacing: .08em;
   }
@@ -494,6 +689,7 @@
     .glass-card { padding: 36px 28px; }
     .photo-frame { width: 170px; height: 170px; }
     .slide-photo { width: 120px; height: 120px; }
+    .gallery-caption { bottom: 104px; }
   }
 </style>
 </head>
@@ -527,8 +723,18 @@
     <div class="deco-star" style="bottom:18px;left:40px;animation-delay:1.2s"></div>
     <div class="deco-star" style="bottom:24px;right:20px;animation-delay:.5s;width:4px;height:4px"></div>
     <p class="subtitle">A special message awaits you...</p>
-    <h1>Are You <span>Ready?</span></h1>
-    <p>Something magical is about to unfold for someone extra special.</p>
+    <h1>Ready ka na <span>MOO?</span></h1>
+    <svg class="h1-flourish" viewBox="0 0 90 10" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 5 Q22 -3 45 5 T90 5" stroke="url(#flourishGrad)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <defs>
+        <linearGradient id="flourishGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#FF6EB4" stop-opacity="0"/>
+          <stop offset=".5" stop-color="#FFB3DA"/>
+          <stop offset="1" stop-color="#9B59B6" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <p>Special ka para sa akin, para saiyo ito Leann.</p>
     <button class="btn-primary" onclick="goToMusic()">Yes, I am ready!</button>
   </div>
 </div>
@@ -563,6 +769,40 @@
 <div class="screen gradient-bg" id="screen-slides">
   <div class="glass-card" id="slide-card">
     <!-- content injected by renderSlide() -->
+  </div>
+</div>
+
+<!-- ── SCREEN 5A.5: OUR STORY TIMELINE (editable, see STORY array) ── -->
+<div class="screen gradient-bg" id="screen-timeline">
+  <div class="timeline-wrap">
+    <p class="timeline-eyebrow">A Look Back</p>
+    <h2 class="timeline-heading">Our Story So Far</h2>
+    <div class="timeline-list" id="timeline-list"><!-- injected by renderTimeline() --></div>
+    <button class="btn-primary timeline-continue" onclick="switchScreen('screen-timeline','screen-gallery', startGallery)">Continue</button>
+  </div>
+</div>
+
+<!-- ── SCREEN 5B: PHOTO GALLERY / SLIDESHOW (editable, see PHOTOS array) ── -->
+<div class="screen gradient-bg" id="screen-gallery">
+  <div class="gallery-wrap" id="gallery-wrap">
+    <div class="gallery-progress" id="gallery-progress"></div>
+    <p class="gallery-eyebrow-top">Our Memories</p>
+    <div class="gallery-stage" id="gallery-stage"></div>
+
+    <div class="gallery-nav-zone left" onclick="galleryPrev()">
+      <div class="gallery-nav-arrow">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </div>
+    </div>
+    <div class="gallery-nav-zone right" onclick="galleryNext()">
+      <div class="gallery-nav-arrow">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+    </div>
+
+    <div class="gallery-caption" id="gallery-caption"></div>
+    <p class="gallery-hint" id="gallery-hint">Tap left / right to browse</p>
+    <button class="btn-primary gallery-continue" id="gallery-continue-btn" onclick="finishGallery()">Continue</button>
   </div>
 </div>
 
@@ -607,6 +847,16 @@
     </div>
 
     <p class="ribbon">With love and warmest wishes, always.</p>
+    <svg viewBox="0 0 90 10" xmlns="http://www.w3.org/2000/svg" style="width:90px;height:10px;margin:4px auto 0;display:block;animation:rise-up 1s ease forwards 1.6s;">
+      <path d="M0 5 Q22 -3 45 5 T90 5" stroke="url(#flourishGrad2)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <defs>
+        <linearGradient id="flourishGrad2" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#FF6EB4" stop-opacity="0"/>
+          <stop offset=".5" stop-color="#FFB3DA"/>
+          <stop offset="1" stop-color="#9B59B6" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+    </svg>
   </div>
 </div>
 
@@ -662,6 +912,27 @@ const MESSAGES = [
   }
 ];
 
+/* ══════════════════════════════════════════════════════════════
+   PHOTO GALLERY — this is the "presentation" part with real
+   pictures. Add as many entries as you want; the progress bar
+   segments, Ken Burns zoom, captions, and navigation all adjust
+   automatically to however many photos are here.
+
+   For each entry:
+     url     -> paste your image link, e.g. "https://i.imgur.com/xxxx.jpg"
+                leave "" to show a placeholder frame instead
+     caption -> short line shown under the photo
+   ══════════════════════════════════════════════════════════════ */
+const PHOTOS = [
+  { url: "", caption: "Where it all started" },
+  { url: "", caption: "That trip we still talk about" },
+  { url: "", caption: "Just being silly together" },
+  { url: "", caption: "My favorite kind of quiet moment" },
+  { url: "", caption: "This smile, always" }
+];
+
+const GALLERY_DURATION = 4500; // ms per photo when autoplaying
+
 let currentSlide = 0;
 
 function photoMarkup(url){
@@ -706,7 +977,7 @@ function nextSlide(){
     currentSlide++;
     renderSlide();
   } else {
-    switchScreen('screen-slides', 'screen-confirm');
+    switchScreen('screen-slides', 'screen-timeline', renderTimeline);
   }
 }
 
@@ -718,6 +989,182 @@ function replaySlides(){
 function revealFinal(){
   switchScreen('screen-confirm', 'screen-main', startBirthday);
 }
+
+/* ══════════════════════════════════════════════════════════════
+   OUR STORY TIMELINE — editable. Add, remove, or reorder freely;
+   the connecting line and scroll-reveal animation adjust to
+   however many entries you list here.
+
+   For each entry:
+     date  -> short label, e.g. "Chapter One", "March 2023", "Day 1"
+     title -> short milestone title
+     text  -> a sentence or two about that moment
+   ══════════════════════════════════════════════════════════════ */
+const STORY = [
+  {
+    date: "Chapter One",
+    title: "How we met",
+    text: "Every story has a beginning — this is where ours started, and where it all made sense from then on."
+  },
+  {
+    date: "Chapter Two",
+    title: "Getting to know you",
+    text: "The little conversations that turned into long ones, and the long ones that turned into something worth remembering."
+  },
+  {
+    date: "Chapter Three",
+    title: "The moments that stuck",
+    text: "Not every memory needs to be big to matter — some of the best ones were the quiet, ordinary days."
+  },
+  {
+    date: "Chapter Four",
+    title: "Today",
+    text: "And now, another year for you — with more stories still waiting to be written."
+  }
+];
+
+function renderTimeline(){
+  const list = document.getElementById('timeline-list');
+  list.innerHTML = STORY.map(s => `
+    <div class="timeline-item">
+      <span class="timeline-dot"></span>
+      <p class="timeline-date">${s.date}</p>
+      <h3 class="timeline-item-title">${s.title}</h3>
+      <p class="timeline-item-text">${s.text}</p>
+    </div>
+  `).join('');
+
+  const items = list.querySelectorAll('.timeline-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) entry.target.classList.add('in-view');
+    });
+  }, { root: document.getElementById('screen-timeline'), threshold: 0.35 });
+  items.forEach((item, i) => {
+    // first couple items reveal immediately so the screen doesn't look empty on arrival
+    if(i < 2) setTimeout(() => item.classList.add('in-view'), 150 + i * 180);
+    observer.observe(item);
+  });
+}
+
+/* ── PHOTO GALLERY LOGIC ───────────────────────────── */
+let galleryIndex = 0;
+let galleryTimer = null;
+
+function galleryPhotoMarkup(url){
+  if(url && url.trim() !== ""){
+    return `<img src="${url}" alt="" />`;
+  }
+  return `
+    <div class="photo-placeholder">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+    </div>`;
+}
+
+function buildGallery(){
+  const stage = document.getElementById('gallery-stage');
+  const prog  = document.getElementById('gallery-progress');
+  stage.innerHTML = '';
+  prog.innerHTML  = '';
+
+  PHOTOS.forEach((p, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'gallery-slide' + (i % 2 ? ' kb-alt' : '');
+    slide.id = 'gslide-' + i;
+    slide.innerHTML = galleryPhotoMarkup(p.url);
+    stage.appendChild(slide);
+
+    const seg = document.createElement('div');
+    seg.className = 'seg';
+    seg.id = 'gseg-' + i;
+    seg.innerHTML = '<span class="fill"></span>';
+    prog.appendChild(seg);
+  });
+}
+
+function showGallerySlide(i){
+  document.querySelectorAll('.gallery-slide').forEach(s => s.classList.remove('active'));
+  const activeSlide = document.getElementById('gslide-' + i);
+  if(activeSlide) activeSlide.classList.add('active');
+
+  document.querySelectorAll('.gallery-progress .seg').forEach((seg, idx) => {
+    const fill = seg.querySelector('.fill');
+    fill.style.transition = 'none';
+    if(idx < i){ fill.style.width = '100%'; }
+    else { fill.style.width = '0%'; }
+  });
+
+  const p = PHOTOS[i];
+  const capBox = document.getElementById('gallery-caption');
+  capBox.innerHTML = `
+    <p class="cap-eyebrow">Memory ${i + 1} of ${PHOTOS.length}</p>
+    <p class="cap-text">${p.caption || ''}</p>
+  `;
+
+  const activeFill = document.querySelector('#gseg-' + i + ' .fill');
+  requestAnimationFrame(() => {
+    activeFill.style.transition = `width ${GALLERY_DURATION}ms linear`;
+    activeFill.style.width = '100%';
+  });
+
+  const isLast = i === PHOTOS.length - 1;
+  document.getElementById('gallery-continue-btn').style.display = isLast ? 'inline-block' : 'none';
+  document.getElementById('gallery-hint').style.display = isLast ? 'none' : 'block';
+
+  clearTimeout(galleryTimer);
+  if(!isLast){
+    galleryTimer = setTimeout(() => { galleryIndex++; showGallerySlide(galleryIndex); }, GALLERY_DURATION);
+  }
+}
+
+function galleryNext(){
+  if(galleryIndex < PHOTOS.length - 1){
+    galleryIndex++;
+    showGallerySlide(galleryIndex);
+  } else {
+    finishGallery();
+  }
+}
+
+function galleryPrev(){
+  if(galleryIndex > 0){
+    galleryIndex--;
+    showGallerySlide(galleryIndex);
+  }
+}
+
+function startGallery(){
+  buildGallery();
+  galleryIndex = 0;
+  showGallerySlide(0);
+}
+
+function finishGallery(){
+  clearTimeout(galleryTimer);
+  switchScreen('screen-gallery', 'screen-confirm');
+}
+
+/* swipe support for touch devices */
+(function(){
+  let touchStartX = 0;
+  const wrap = document.getElementById('gallery-wrap');
+  wrap.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+  wrap.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if(Math.abs(dx) < 40) return;
+    if(dx < 0) galleryNext(); else galleryPrev();
+  }, { passive: true });
+})();
+
+/* keyboard arrows while gallery screen is active */
+document.addEventListener('keydown', e => {
+  if(!document.getElementById('screen-gallery').classList.contains('active')) return;
+  if(e.key === 'ArrowRight') galleryNext();
+  if(e.key === 'ArrowLeft')  galleryPrev();
+});
 
 /* ── PARTICLE BACKGROUND ───────────────────────────── */
 (function(){
@@ -894,11 +1341,7 @@ function startCountdown(){
       idx++;
       setTimeout(showNum, 900);
     } else {
-      label.textContent = 'Get Ready to Read...';
-      label.style.color = 'var(--pink-light)';
-      label.style.fontSize = '1.2rem';
-      label.style.fontFamily = "'Great Vibes', cursive";
-      label.style.letterSpacing = '.05em';
+      label.textContent = 'Get ready to read...';
       setTimeout(()=>{
         currentSlide = 0;
         switchScreen('screen-countdown','screen-slides', renderSlide);
