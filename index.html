@@ -657,7 +657,7 @@
     to   { transform: scale(0) translateY(-20px); opacity: 0; }
   }
 
-  /* ── MUSIC INDICATOR ─────────────────────────────── */
+  /* ── MUSIC INDICATOR (now clickable — tap to skip to next song) ── */
   .music-indicator {
     position: fixed; top: 20px; right: 20px;
     z-index: 100;
@@ -671,12 +671,21 @@
     color: rgba(255,255,255,.7);
     font-family: var(--font-body);
     font-size: .8rem; font-weight: 600;
-    letter-spacing: .08em;
+    letter-spacing: .04em;
+    cursor: pointer;
+    max-width: 220px;
+    transition: background .2s, transform .15s;
   }
   .music-indicator.show { display: flex; }
+  .music-indicator:hover { background: rgba(255,255,255,.13); }
+  .music-indicator:active { transform: scale(.96); }
+  .music-indicator .track-title {
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    max-width: 140px;
+  }
   .music-bars {
     display: flex; align-items: flex-end;
-    gap: 2px; height: 14px;
+    gap: 2px; height: 14px; flex-shrink: 0;
   }
   .music-bar {
     width: 3px; border-radius: 3px;
@@ -759,15 +768,15 @@
 <!-- Confetti Canvas -->
 <canvas id="confetti-canvas"></canvas>
 
-<!-- Music Indicator -->
-<div class="music-indicator" id="music-indicator">
+<!-- Music Indicator — click/tap this to skip to the next song in PLAYLIST -->
+<div class="music-indicator" id="music-indicator" onclick="nextTrack()" title="Tap to change song">
   <div class="music-bars">
     <div class="music-bar" style="height:40%"></div>
     <div class="music-bar" style="height:60%"></div>
     <div class="music-bar" style="height:80%"></div>
     <div class="music-bar" style="height:50%"></div>
   </div>
-  Now Playing
+  <span class="track-title" id="track-title">Now Playing</span>
 </div>
 
 <!-- ── SCREEN 1: ARE YOU READY ───────────────────── -->
@@ -915,16 +924,8 @@
   </div>
 </div>
 
-<!-- HIDDEN AUDIO — Set your music URL below -->
-<audio id="bg-music" loop>
-  <!--
-    CHANGE THE SRC BELOW to your desired music URL.
-    Examples:
-      <source src="https://your-music-url.com/song.mp3" type="audio/mpeg">
-      <source src="birthday.mp3" type="audio/mpeg">
-  -->
-  <source src="Stephen Sanchez - Until I Found You (Official Video).mp3" type="audio/mpeg">
-</audio>
+<!-- HIDDEN AUDIO — song source is now set from PLAYLIST in the script below -->
+<audio id="bg-music"></audio>
 
 <script>
 /* ══════════════════════════════════════════════════════════════
@@ -987,6 +988,44 @@ const PHOTOS = [
 ];
 
 const GALLERY_DURATION = 4500; // ms per photo when autoplaying
+
+/* ══════════════════════════════════════════════════════════════
+   MUSIC PLAYLIST — fully editable.
+   Add as many songs as you want. The "Now Playing" bubble
+   (top-right, only visible after choosing "Yes, Play Music")
+   is clickable/tappable — every tap jumps to the next song in
+   this list. When a song finishes on its own, it also
+   automatically moves to the next one, so it won't just loop
+   the same track over and over.
+
+   For each song:
+     src   -> direct audio file link, ending in .mp3 or .mp4
+              (NOT a YouTube link — see earlier notes on this)
+     title -> short label shown inside the "Now Playing" bubble
+   ══════════════════════════════════════════════════════════════ */
+const PLAYLIST = [
+  { src: "Stephen Sanchez - Until I Found You (Official Video).mp3", title: "Until I Found You" }
+  { src: "Stephen Sanchez - Until I Found You (Official Video).mp3", title: "Until I Found You" }
+  // Add more songs by copying the line above, e.g.:
+  // , { src: "song2.mp3", title: "Song Two Title" }
+  // , { src: "song3.mp3", title: "Song Three Title" }
+];
+
+let currentTrack = 0;
+
+function loadTrack(i){
+  if(PLAYLIST.length === 0) return;
+  currentTrack = ((i % PLAYLIST.length) + PLAYLIST.length) % PLAYLIST.length;
+  const track = PLAYLIST[currentTrack];
+  audio.src = track.src;
+  const label = document.getElementById('track-title');
+  if(label) label.textContent = track.title || 'Now Playing';
+  audio.play().catch(()=>{});
+}
+
+function nextTrack(){
+  loadTrack(currentTrack + 1);
+}
 
 let currentSlide = 0;
 
@@ -1370,9 +1409,10 @@ function goToMusic(){
 }
 
 const audio = document.getElementById('bg-music');
+audio.addEventListener('ended', nextTrack); // auto-advance to next song when one finishes
 
 function startWithMusic(){
-  audio.play().catch(()=>{});
+  loadTrack(0);
   document.getElementById('music-indicator').classList.add('show');
   switchScreen('screen-music','screen-countdown', startCountdown);
 }
